@@ -5,23 +5,26 @@ Journey" dataset drove incremental customer spend, using SQL (DuckDB) and
 Python.
 
 ## Question
-Did households exposed to a large-scale loyalty campaign show a statistically 
-significant increase in spend during the campaign period — and was this 
-specific to the campaign, or part of a broader trend?
+Did households exposed to a large-scale loyalty campaign show a real 
+increase in spend during the campaign period — and was this caused by the 
+campaign, or by broader spending trends and pre-existing differences between 
+customer groups?
 
 ## Method
-- Compared each household's spend before vs. during the campaign (paired t-test)
-- Built a control group of households not exposed to any overlapping campaign, 
-  to isolate the campaign's effect from general spending trends
-- Identified and addressed selection bias in the campaign-targeted population
+* Compared each household's spend before vs. during the campaign (paired t-test)
+* Built a control group of households not exposed to any overlapping campaign, to isolate the campaign's effect from general spending trends
+* Identified selection bias: campaign households had 3.6x higher baseline spend than the control group, meaning the two groups were not directly comparable
+* Corrected for this by restricting both groups to a shared baseline spend range (£100–£300) and re-running the comparison on this matched subset
 
 ## Key finding
-Both campaign and control groups showed statistically significant spend 
-increases over the period, and campaign households had a 3.6x higher baseline 
-spend than the control group — indicating the campaign was targeted at 
-already high-value customers, not a random sample. This makes it difficult to 
-attribute the spend increase to the campaign alone. See the notebook for full 
-analysis and discussion of this limitation.
+In the initial unmatched comparison, both campaign and control groups showed 
+significant spend increases — making it unclear whether the campaign itself 
+was responsible. After matching both groups on baseline spend to remove this 
+bias, the campaign group still showed a significant increase (+£51.79, 
+p<0.001), while the matched control group showed no significant change 
+(+£5.46, p=0.52). This is stronger evidence that the campaign drove real 
+incremental spend, at least among mid-spend households. See the notebook for 
+the full analysis, including the limitations of this matched result.
 
 ## Tools
 SQL (DuckDB), Python (pandas, scipy), Jupyter Notebook
